@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Friki store · Tienda en línea</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__top">
+      <a href="#" class="logo">Friki <span>store</span></a>
+      <div class="search">
+        <input id="searchInput" type="text" placeholder="Buscar productos, sagas, personajes..." />
+        <button id="searchBtn" aria-label="Buscar">🔍</button>
+      </div>
+      <div class="header__actions">
+        <button id="loginBtn" class="btn btn--ghost">Iniciar sesión</button>
+        <button id="cartBtn" class="btn btn--icon" aria-label="Carrito">
+          🛒 <span id="cartCount" class="badge">0</span>
+        </button>
+      </div>
+    </div>
+    <div class="drawer__header">
+  <h3>Tu carrito</h3>
+  <button id="closeCart" class="drawer__close" aria-label="Cerrar">✕</button>
+</div>
+
+
+    <nav class="nav">
+      <button class="nav__toggle" id="navToggle">☰ Categorías</button>
+      <ul class="nav__list" id="categoryList">
+        <!-- Se llenará dinámicamente -->
+      </ul>
+      <div class="sort">
+        <label for="sortSelect">Ordenar:</label>
+        <select id="sortSelect">
+          <option value="relevance">Relevancia</option>
+          <option value="price-asc">Precio: menor a mayor</option>
+          <option value="price-desc">Precio: mayor a menor</option>
+          <option value="rating-desc">Rating: alto a bajo</option>
+        </select>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Banner -->
+  <section class="hero">
+    <div class="hero__content">
+      <h1>Tu universo friki, en un solo lugar</h1>
+      <p>Figuras, playeras, coleccionables y más. Envíos a todo México.</p>
+      <a href="#products" class="btn btn--primary">Explorar productos</a>
+    </div>
+  </section>
+
+  <!-- Filtros -->
+  <section class="filters">
+    <div class="filters__group">
+      <label for="priceMin">Precio mínimo</label>
+      <input id="priceMin" type="number" min="0" placeholder="0" />
+    </div>
+    <div class="filters__group">
+      <label for="priceMax">Precio máximo</label>
+      <input id="priceMax" type="number" min="0" placeholder="5000" />
+    </div>
+    <div class="filters__group">
+      <label for="onlyStock">
+        <input id="onlyStock" type="checkbox" /> Solo en stock
+      </label>
+    </div>
+    <div class="filters__actions">
+      <button id="applyFilters" class="btn btn--secondary">Aplicar filtros</button>
+      <button id="clearFilters" class="btn btn--ghost">Limpiar</button>
+    </div>
+  </section>
+
+  <!-- Productos -->
+  <main id="products" class="products">
+    <div id="productGrid" class="grid">
+      <!-- Tarjetas de productos se generan por JS -->
+    </div>
+  </main>
+
+  <!-- Modal de producto -->
+  <div id="productModal" class="modal" aria-hidden="true">
+    <div class="modal__dialog">
+      <button class="modal__close" id="closeModal" aria-label="Cerrar">✕</button>
+      <div class="modal__content">
+        <img id="modalImage" alt="Imagen del producto" />
+        <div class="modal__details">
+          <h2 id="modalTitle"></h2>
+          <p id="modalBrand" class="muted"></p>
+          <div class="rating" id="modalRating"></div>
+          <p id="modalDescription"></p>
+          <div class="price-stock">
+            <span id="modalPrice" class="price"></span>
+            <span id="modalStock" class="stock"></span>
+          </div>
+          <div class="qty">
+            <label for="modalQty">Cantidad</label>
+            <input id="modalQty" type="number" min="1" value="1" />
+          </div>
+          <button id="modalAddToCart" class="btn btn--primary">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carrito -->
+  <aside id="cartDrawer" class="drawer" aria-hidden="true">
+    <div class="drawer__header">
+      <h3>Tu carrito</h3>
+      <button id="closeCart" class="drawer__close" aria-label="Cerrar">✕</button>
+    </div>
+    <div id="cartItems" class="drawer__body">
+      <!-- Items del carrito -->
+    </div>
+    <div class="drawer__footer">
+      <div class="summary">
+        <span>Subtotal:</span>
+        <strong id="cartSubtotal">$0.00</strong>
+      </div>
+      <button id="checkoutBtn" class="btn btn--primary">Ir a pagar</button>
+    </div>
+  </aside>
+
+  <!-- Checkout simple -->
+  <div id="checkoutModal" class="modal" aria-hidden="true">
+    <div class="modal__dialog">
+      <button class="modal__close" id="closeCheckout" aria-label="Cerrar">✕</button>
+      <div class="modal__content">
+        <h2>Finalizar compra</h2>
+        <form id="checkoutForm" class="checkout-form">
+          <div class="form-row">
+            <label>Nombre completo</label>
+            <input type="text" id="fullName" required />
+          </div>
+          <div class="form-row">
+            <label>Correo</label>
+            <input type="email" id="email" required />
+          </div>
+          <div class="form-row">
+            <label>Dirección</label>
+            <input type="text" id="address" required />
+          </div>
+          <div class="form-row">
+            <label>Ciudad</label>
+            <input type="text" id="city" required />
+          </div>
+          <div class="form-row">
+            <label>Código postal</label>
+            <input type="text" id="zip" required />
+          </div>
+          <div class="form-row">
+            <label>Método de pago</label>
+            <select id="payment" required>
+              <option value="card">Tarjeta</option>
+              <option value="oxxo">OXXO</option>
+              <option value="transfer">Transferencia</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn--primary">Confirmar pedido</button>
+        </form>
+        <p id="orderMessage" class="success" hidden>¡Gracias! Tu pedido ha sido confirmado.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__grid">
+      <div>
+        <h4>Friki store</h4>
+        <p>Tu tienda en línea de cultura pop, anime y gaming.</p>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Envíos y entregas</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">Soporte</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Suscríbete</h4>
+        <form id="newsletterForm">
+          <input type="email" placeholder="Tu correo" required />
+          <button class="btn btn--secondary" type="submit">Unirme</button>
+        </form>
+      </div>
+    </div>
+    <p class="footer__copy">© 2025 Friki store · Guadalajara, Jalisco</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
