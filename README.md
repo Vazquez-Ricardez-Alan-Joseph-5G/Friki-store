@@ -1,0 +1,1 @@
+sean bienvenidos a mi proyecto :D mi proyecto se basa en una tienda en linea con articulos que se podrian vender en una tienda friki, una friki plaza o hasta en una convencion de anime o de comisc etc.
